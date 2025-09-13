@@ -9,7 +9,6 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Navigation, Autoplay } from "swiper/modules";
-import Image from "next/image";
 
 function Banner() {
   return (
@@ -22,26 +21,20 @@ function Banner() {
       className="mySwiper home-slider"
     >
       <SwiperSlide>
-        <Image
-          width={1000}
-          height={1000}
-          src="/images/1.png"
+        <img
+          src="https://set-coffee.com/wp-content/uploads/2023/12/slide.jpg"
           alt="Slide"
         />
       </SwiperSlide>
       <SwiperSlide>
-        <Image
-          width={1000}
-          height={1000}
-          src="/images/2.png"
+        <img
+          src="https://set-coffee.com/wp-content/uploads/2021/10/winter-slie.jpg"
           alt="Slide"
         />
       </SwiperSlide>
       <SwiperSlide>
-        <Image
-          width={1000}
-          height={1000}
-          src="/images/3.png"
+        <img
+          src="https://set-coffee.com/wp-content/uploads/2022/06/fall.jpg"
           alt="Slide"
         />
       </SwiperSlide>

@@ -3,7 +3,6 @@ import styles from "./Nabvar.module.css";
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaShoppingCart, FaRegHeart } from "react-icons/fa";
-import Image from "next/image";
 
 function Navbar() {
   return (
@@ -11,7 +10,7 @@ function Navbar() {
       <main>
         <div>
           <Link href="/">
-            <Image src="/images/logo.png" alt="Logo" width={250} height={100} />
+            <img src="/images/logo.png" alt="Logo" />
           </Link>
         </div>
 
