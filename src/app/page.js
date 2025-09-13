@@ -1,9 +1,10 @@
+import Navbar from "@/components/modules/navbar/Navbar";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <main>
-      <p style={{ color: "black" }}>next</p>
+      <Navbar />
     </main>
   );
 }
