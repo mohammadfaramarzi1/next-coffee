@@ -1,49 +1,23 @@
-import { connectToDb } from "@/configs/db";
+import connectToDB from "@/configs/db";
 import UserModel from "@/models/User";
-import {
-  generateAccessToken,
-  hashPassword,
-  validateEmail,
-  validatePassword,
-  validatePhone,
-} from "@/utils/auth";
+import { generateAccessToken, hashPassword } from "@/utils/auth";
 import { roles } from "@/utils/constants";
 
 export async function POST(req) {
-  await connectToDb();
+  connectToDB();
   const body = await req.json();
-  const { name, email, password, phone } = body;
+  const { name, phone, email, password } = body;
 
-  //users count
-  const users = await UserModel.find();
+  // Validation (You)
 
-  //validation
-
-  if (!name.trim()) {
-    return Response.json({ message: "Name is not valid", status: 422 });
-  }
-
-  if (!validatePhone(phone)) {
-    return Response.json({ message: "Phone is not valid", status: 422 });
-  }
-
-  if (!validatePassword(password)) {
-    return Response.json({ message: "Password is not valid", status: 422 });
-  }
-
-  if (email && !validateEmail(email)) {
-    return Response.json({ message: "Email is not valid", status: 422 });
-  }
-
-  //isUserExists
-  const isUserExists = await UserModel.findOne({
+  const isUserExist = await UserModel.findOne({
     $or: [{ name }, { email }, { phone }],
   });
 
-  if (isUserExists) {
+  if (isUserExist) {
     return Response.json(
       {
-        message: "User Already Exists",
+        message: "The username or email or phone exist already !!",
       },
       {
         status: 422,
@@ -51,26 +25,21 @@ export async function POST(req) {
     );
   }
 
-  //hash password
   const hashedPassword = await hashPassword(password);
-
-  //access token
-
   const accessToken = generateAccessToken({ name });
 
-  //generate user
+  const users = await UserModel.find({});
+
   await UserModel.create({
     name,
-    phone,
     email,
+    phone,
     password: hashedPassword,
     role: users.length > 0 ? roles.USER : roles.ADMIN,
   });
 
   return Response.json(
-    {
-      message: "User created successfully",
-    },
+    { message: "User signed up successfully :))" },
     {
       status: 201,
       headers: { "Set-Cookie": `token=${accessToken};path=/;httpOnly=true` },
