@@ -1,50 +1,63 @@
 import { hash, compare } from "bcryptjs";
-import { verify, sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 
-export const hashPassword = async (password) => {
+const hashPassword = async (password) => {
   const hashedPassword = await hash(password, 12);
   return hashedPassword;
 };
 
-export const verifyPassword = async (password, hashedPassword) => {
-  const isValid = compare(password, hashedPassword);
+const verifyPassword = async (password, hashedPassword) => {
+  const isValid = await compare(password, hashedPassword);
   return isValid;
 };
 
-export const generateAccessToken = (data) => {
-  const token = sign({ ...data }, process.env.ACEESS_TOKEN_SECRET_KEY, {
-    expiresIn: "60s",
+const generateAccessToken = (data) => {
+  const token = sign({ ...data }, process.env.AccessTokenSecretKey, {
+    expiresIn: "60d",
   });
   return token;
 };
 
-export const verifyAccessToken = (token) => {
+const verifyAccessToken = (token) => {
   try {
-    const tokenPayload = verify(token, process.env.ACEESS_TOKEN_SECRET_KEY);
+    const tokenPayload = verify(token, process.env.AccessTokenSecretKey);
     return tokenPayload;
-  } catch (error) {
-    console.log(`Verify access token error => ${error}`);
+  } catch (err) {
+    console.log("Verify Access Token Error ->", err);
     return false;
   }
 };
 
-export const generateRefreshToken = (data) => {
-  const token = sign({ ...data }, process.env.REFRESH_TOKEN_SECRET_KEY, {
+const generateRefreshToken = (data) => {
+  const token = sign({ ...data }, process.env.RefreshTokenSecretKey, {
     expiresIn: "15d",
   });
   return token;
 };
 
-export const validatePhone = (phone) => {
-  const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g;
-  return pattern.test(phone);
-};
-export const validateEmail = (email) => {
+const valiadteEmail = (email) => {
   const pattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g;
   return pattern.test(email);
 };
-export const validatePassword = (password) => {
+
+const valiadtePhone = (phone) => {
+  const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g;
+  return pattern.test(phone);
+};
+
+const valiadtePassword = (password) => {
   const pattern =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g;
   return pattern.test(password);
+};
+
+export {
+  hashPassword,
+  verifyPassword,
+  generateAccessToken,
+  verifyAccessToken,
+  generateRefreshToken,
+  valiadteEmail,
+  valiadtePhone,
+  valiadtePassword,
 };
