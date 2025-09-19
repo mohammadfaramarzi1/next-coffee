@@ -12,7 +12,7 @@ const verifyPassword = async (password, hashedPassword) => {
 };
 
 const generateAccessToken = (data) => {
-  const token = sign({ ...data }, process.env.AccessTokenSecretKey, {
+  const token = sign({ ...data }, process.env.ACEESS_TOKEN_SECRET_KEY, {
     expiresIn: "60d",
   });
   return token;
@@ -20,7 +20,7 @@ const generateAccessToken = (data) => {
 
 const verifyAccessToken = (token) => {
   try {
-    const tokenPayload = verify(token, process.env.AccessTokenSecretKey);
+    const tokenPayload = verify(token, process.env.ACEESS_TOKEN_SECRET_KEY);
     return tokenPayload;
   } catch (err) {
     console.log("Verify Access Token Error ->", err);
@@ -29,7 +29,7 @@ const verifyAccessToken = (token) => {
 };
 
 const generateRefreshToken = (data) => {
-  const token = sign({ ...data }, process.env.RefreshTokenSecretKey, {
+  const token = sign({ ...data }, process.env.REFRESH_TOKEN_SECRET_KEY, {
     expiresIn: "15d",
   });
   return token;

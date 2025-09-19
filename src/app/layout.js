@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import AOSInit from "@/utils/aos";
-import ScrollToTop from "@/utils/SctollToTop";
+import ScrollToTop from "@/utils/ScrollToTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
