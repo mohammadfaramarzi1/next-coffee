@@ -1,7 +1,6 @@
+// src/utils/auth.js
 import { hash, compare } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
-import { cookies } from "next/headers";
-import UserModel from "@/models/User";
 
 const hashPassword = async (password) => {
   const hashedPassword = await hash(password, 12);
@@ -9,21 +8,18 @@ const hashPassword = async (password) => {
 };
 
 const verifyPassword = async (password, hashedPassword) => {
-  const isValid = await compare(password, hashedPassword);
-  return isValid;
+  return await compare(password, hashedPassword);
 };
 
 const generateAccessToken = (data) => {
-  const token = sign({ ...data }, process.env.ACEESS_TOKEN_SECRET_KEY, {
+  return sign({ ...data }, process.env.ACEESS_TOKEN_SECRET_KEY, {
     expiresIn: "60d",
   });
-  return token;
 };
 
 const verifyAccessToken = (token) => {
   try {
-    const tokenPayload = verify(token, process.env.ACEESS_TOKEN_SECRET_KEY);
-    return tokenPayload;
+    return verify(token, process.env.ACEESS_TOKEN_SECRET_KEY);
   } catch (err) {
     console.log("Verify Access Token Error ->", err);
     return false;
@@ -31,40 +27,25 @@ const verifyAccessToken = (token) => {
 };
 
 const generateRefreshToken = (data) => {
-  const token = sign({ ...data }, process.env.REFRESH_TOKEN_SECRET_KEY, {
+  return sign({ ...data }, process.env.REFRESH_TOKEN_SECRET_KEY, {
     expiresIn: "15d",
   });
-  return token;
 };
 
-const valiadteEmail = (email) => {
+const validateEmail = (email) => {
   const pattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g;
   return pattern.test(email);
 };
 
-const valiadtePhone = (phone) => {
+const validatePhone = (phone) => {
   const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g;
   return pattern.test(phone);
 };
 
-const valiadtePassword = (password) => {
+const validatePassword = (password) => {
   const pattern =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g;
   return pattern.test(password);
-};
-
-const authUser = async () => {
-  const token = cookies().get("token");
-  let user = null;
-
-  if (token) {
-    const tokenPayload = verifyAccessToken(token.value);
-    if (tokenPayload) {
-      user = await UserModel.findOne({ email: tokenPayload.email });
-    }
-  }
-
-  return user;
 };
 
 export {
@@ -73,8 +54,7 @@ export {
   generateAccessToken,
   verifyAccessToken,
   generateRefreshToken,
-  valiadteEmail,
-  valiadtePhone,
-  valiadtePassword,
-  authUser,
+  validateEmail,
+  validatePhone,
+  validatePassword,
 };

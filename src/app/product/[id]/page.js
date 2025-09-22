@@ -6,7 +6,7 @@ import MoreProducts from "@/components/templates/product/MoreProducts";
 
 import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
-import { authUser } from "@/utils/auth";
+import { authUser } from "@/app/actions/authServer";
 
 const product = async () => {
   const user = await authUser();
