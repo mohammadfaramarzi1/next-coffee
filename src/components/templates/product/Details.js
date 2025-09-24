@@ -1,4 +1,4 @@
-import { FaFacebookF, FaRegStar, FaStar, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaStar, FaTwitter, FaRegStar } from "react-icons/fa";
 import { IoCheckmark } from "react-icons/io5";
 import { CiHeart } from "react-icons/ci";
 import { TbSwitch3 } from "react-icons/tb";
@@ -14,10 +14,11 @@ const Details = ({ product }) => {
 
       <div className={styles.rating}>
         <div>
-          {new Array(product.score).fill(0).map((_, index) => (
+          {new Array(product.score).fill(0).map((item, index) => (
             <FaStar key={index} />
           ))}
-          {new Array(5 - product.score).fill(0).map((_, index) => (
+
+          {new Array(5 - product.score).fill(0).map((item, index) => (
             <FaRegStar key={index} />
           ))}
         </div>
@@ -56,13 +57,10 @@ const Details = ({ product }) => {
 
       <div className={styles.details}>
         <strong>شناسه محصول: {product._id}</strong>
+
         <p>
-          <strong>دسته:</strong>
+          <strong>برچسب:</strong>
           {product.tags.join(" ,")}
-        </p>
-        <p>
-          <strong>برچسب:</strong> کپسول قهوه،کپسول قهوه ست پرسو،کپسول قهوه
-          ایرانی،کپسول قهوه نسپرسو ایرانی،قهوه ست ، Setpresso،Gold Setpresso
         </p>
       </div>
 
