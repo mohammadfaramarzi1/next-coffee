@@ -2,7 +2,7 @@ import Comment from "@/components/modules/comment/Comment";
 import styles from "./comments.module.css";
 import CommentForm from "./CommentForm";
 
-const Comments = ({ comments }) => {
+const Comments = ({ productID, comments }) => {
   return (
     <div>
       <p>نظرات ({comments.length}) :</p>
@@ -15,13 +15,13 @@ const Comments = ({ comments }) => {
             نسپرسو ( GOLD ) ده -10- عددی
           </p>
           <div>
-            {comments.map((item) => (
-              <Comment key={item._id} {...item} />
+            {comments.map((comment) => (
+              <Comment key={comment._id} {...comment} />
             ))}
           </div>
         </div>
         <div className={styles.form_bg}>
-          <CommentForm />
+          <CommentForm productID={productID} />
         </div>
       </main>
     </div>
