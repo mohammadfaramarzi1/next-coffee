@@ -27,6 +27,10 @@ const schema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Product",
   },
+  isAccept: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const model = mongoose.models.Comment || mongoose.model("Comment", schema);
