@@ -45,7 +45,7 @@ export async function GET() {
   try {
     await connectToDB();
     const products = await ProductModel.find({}, "-__v").populate("comments");
-    return Response.json(products, { status: 200 });
+    return Response.json(products);
   } catch (error) {
     return Response.json(
       { message: "Internal Server Error", error },
