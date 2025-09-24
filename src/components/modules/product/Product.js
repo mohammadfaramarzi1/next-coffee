@@ -3,7 +3,7 @@ import styles from "./product.module.css";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { CiSearch, CiHeart } from "react-icons/ci";
 
-const Card = () => {
+const Card = ({ name, score, price }) => {
   return (
     <div className={styles.card}>
       <div className={styles.details_container}>
@@ -25,18 +25,17 @@ const Card = () => {
       </div>
 
       <div className={styles.details}>
-        <Link href={"/"}>
-          کپسول قهوه SETpresso سازگار با دستگاه نسپرسو ( RED ) 10 عددی LIMITED
-          EDITION
-        </Link>
+        <Link href={"/"}>{name}</Link>
         <div>
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaRegStar />
-          <FaRegStar />
+          {new Array(score).fill(0).map((_, index) => (
+            <FaStar key={index} />
+          ))}
+
+          {new Array(5 - score).fill(0).map((_, index) => (
+            <FaRegStar key={index} />
+          ))}
         </div>
-        <span>825,000 تومان</span>
+        <span>{price.toLocaleString()} تومان</span>
       </div>
     </div>
   );
