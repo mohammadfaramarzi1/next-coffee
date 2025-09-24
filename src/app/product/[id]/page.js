@@ -3,23 +3,30 @@ import Gallery from "@/components/templates/product/Gallery";
 import Details from "@/components/templates/product/Details";
 import Tabs from "@/components/templates/product/Tabs";
 import MoreProducts from "@/components/templates/product/MoreProducts";
+import ProductModel from "@/models/Product";
 
 import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
 import { authUser } from "@/app/actions/authServer";
+import connectToDB from "@/configs/db";
 
-const product = async () => {
+const product = async ({ params }) => {
+  await connectToDB();
   const user = await authUser();
+  const productId = params.id;
+  const product = await ProductModel.findOne({ _id: productId }).populate(
+    "comments"
+  );
 
   return (
     <div className={styles.container}>
       <Navbar isLogin={user ? true : false} />
       <div data-aos="fade-up" className={styles.contents}>
         <div className={styles.main}>
-          <Details />
+          <Details product={JSON.parse(JSON.stringify(product))} />
           <Gallery />
         </div>
-        <Tabs />
+        <Tabs product={JSON.parse(JSON.stringify(product))} />
         <MoreProducts />
       </div>
       <Footer />
