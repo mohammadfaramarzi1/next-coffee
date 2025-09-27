@@ -5,18 +5,20 @@ import CommentForm from "./CommentForm";
 const Comments = ({ productID, comments }) => {
   return (
     <div>
-      <p>نظرات ({comments.filter((item) => item.isAccept).length}) :</p>
+      <p>نظرات ({comments.filter((comment) => comment.isAccept).length}) :</p>
       <hr />
 
       <main className={styles.comments}>
         <div className={styles.user_comments}>
           <p className={styles.title}>
-            {comments.filter((item) => item.isAccept).length} دیدگاه برای کپسول
-            قهوه SETPRESSO سازگار با دستگاه نسپرسو ( GOLD ) ده -10- عددی
+            {comments.filter((comment) => comment.isAccept).length}
+            دیدگاه برای کپسول قهوه SETPRESSO سازگار با دستگاه نسپرسو ( GOLD ) ده
+            -10- عددی
           </p>
           <div>
             {comments.map(
-              (item) => item.isAccept && <Comment key={item._id} {...item} />
+              (comment) =>
+                comment.isAccept && <Comment key={comment._id} {...comment} />
             )}
           </div>
         </div>
