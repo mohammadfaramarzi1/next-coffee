@@ -2,7 +2,6 @@ import { IoMdStar } from "react-icons/io";
 import styles from "./commentForm.module.css";
 import { useState } from "react";
 import { showSwal } from "@/utils/helpers";
-import { validateEmail } from "@/utils/auth";
 const CommentForm = ({ productID }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -15,24 +14,13 @@ const CommentForm = ({ productID }) => {
   };
 
   const submitComment = async () => {
-    if (!body.trim() || !username.trim || !email.trim()) {
-      return showSwal(
-        "اطلاعات وارد شده نا معتبر می باشد",
-        "error",
-        "تلاش مجدد"
-      );
-    }
-
-    if (!validateEmail(email)) {
-      return showSwal("ایمیل وارد شده نا معتبر می باشد", "error", "تلاش مجدد");
-    }
-
+    // Validation (You)
     const comment = {
       username,
       email,
       body,
       score,
-      product: productID,
+      productID,
     };
 
     const res = await fetch("/api/comments", {
@@ -43,10 +31,8 @@ const CommentForm = ({ productID }) => {
       body: JSON.stringify(comment),
     });
 
+    console.log("Response ->", res);
     if (res.status === 201) {
-      setBody("");
-      setEmail("");
-      setUsername("");
       showSwal("کامنت مورد نظر با موفقیت ثبت شد", "success", "فهمیدم");
     }
   };

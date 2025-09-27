@@ -3,7 +3,7 @@ import styles from "./product.module.css";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { CiSearch, CiHeart } from "react-icons/ci";
 
-const Card = ({ name, score, price }) => {
+const Card = ({ name, price }) => {
   return (
     <div className={styles.card}>
       <div className={styles.details_container}>
@@ -27,15 +27,13 @@ const Card = ({ name, score, price }) => {
       <div className={styles.details}>
         <Link href={"/"}>{name}</Link>
         <div>
-          {new Array(score).fill(0).map((_, index) => (
-            <FaStar key={index} />
-          ))}
-
-          {new Array(5 - score).fill(0).map((_, index) => (
-            <FaRegStar key={index} />
-          ))}
+          <FaStar />
+          <FaStar />
+          <FaStar />
+          <FaRegStar />
+          <FaRegStar />
         </div>
-        <span>{price.toLocaleString()} تومان</span>
+        <span>{price} تومان</span>
       </div>
     </div>
   );
