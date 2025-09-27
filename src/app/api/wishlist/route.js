@@ -8,8 +8,8 @@ export async function POST(req) {
     await connectToDB();
     const body = await req.json();
     const { user, product } = body;
-    const mainUser = await UserModel.findOne({ _id: user._id });
-    const mainProduct = await ProductModel.findOne({ _id: product._id });
+    const mainUser = await UserModel.findOne({ _id: user });
+    const mainProduct = await ProductModel.findOne({ _id: product });
     if (!mainProduct) {
       return Response.json(
         { message: "This product does not exists" },
