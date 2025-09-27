@@ -13,7 +13,6 @@ const Login = ({ showRegisterForm }) => {
   const hideOtpForm = () => setIsLoginWithOtp(false);
 
   const loginWithPassword = async () => {
-    console.log(phoneOrEmail);
     if (!phoneOrEmail) {
       return showSwal("لطفا شماره تماس یا ایمیل را وارد کنید", "error", "چشم");
     }
@@ -39,7 +38,6 @@ const Login = ({ showRegisterForm }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
     });
-    const data = await res.json();
 
     console.log("Res ->", res);
     if (res.status === 200) {
