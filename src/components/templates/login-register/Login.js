@@ -39,7 +39,6 @@ const Login = ({ showRegisterForm }) => {
       body: JSON.stringify(user),
     });
 
-    console.log("Res ->", res);
     if (res.status === 200) {
       showSwal("با موفقیت لاگین شدین", "success", "ورود به پنل کاربری");
     } else if (res.status === 422 || res.status === 401) {
