@@ -43,7 +43,7 @@ const Details = ({ product }) => {
       </div>
 
       <section className={styles.wishlist}>
-        <AddToWishlist />
+        <AddToWishlist product={product} />
         <div>
           <TbSwitch3 />
           <a href="/">مقایسه</a>

@@ -10,6 +10,16 @@ export async function POST(req) {
     const { user, product } = body;
     const mainUser = await UserModel.findOne({ _id: user });
     const mainProduct = await ProductModel.findOne({ _id: product });
+    const isExistsInListWishlist = await WishlistModel.findOne({
+      product,
+      user,
+    });
+    if (isExistsInListWishlist) {
+      return Response.json(
+        { message: "This product exists in wishlist!" },
+        { status: 419 }
+      );
+    }
     if (!mainProduct) {
       return Response.json(
         { message: "This product does not exists" },
@@ -22,6 +32,7 @@ export async function POST(req) {
         { status: 422 }
       );
     }
+
     await WishlistModel.create({ user, product });
     return Response.json(
       { message: "Product added to wishlist successfully" },
