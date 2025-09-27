@@ -1,9 +1,8 @@
 import { useState } from "react";
 import styles from "./register.module.css";
 import Sms from "./Sms";
-import swal from "sweetalert";
 import { showSwal } from "@/utils/helpers";
-import { valiadteEmail, valiadtePassword, valiadtePhone } from "@/utils/auth";
+import { validateEmail, validatePassword, validatePhone } from "@/utils/auth";
 
 const Register = ({ showloginForm }) => {
   const [isRegisterWithPass, setIsRegisterWithPass] = useState(false);
@@ -20,19 +19,19 @@ const Register = ({ showloginForm }) => {
       return showSwal("نام را وارد بکنید", "error", "تلاش مجدد");
     }
 
-    const isValidPhone = valiadtePhone(phone);
+    const isValidPhone = validatePhone(phone);
     if (!isValidPhone) {
       return showSwal("شماره تماس وارد شده معتبر نیست", "error", "تلاش مجدد ");
     }
 
     if (email) {
-      const isValidEmail = valiadteEmail(email);
+      const isValidEmail = validateEmail(email);
       if (!isValidEmail) {
         return showSwal("ایمیل وارد شده معتبر نیست", "error", "تلاش مجدد ");
       }
     }
 
-    const isValidPassword = valiadtePassword(password);
+    const isValidPassword = validatePassword(password);
     if (!isValidPassword) {
       return showSwal("پسورد وارد شده قابل حدس هست", "error", "تلاش مجدد ");
     }
